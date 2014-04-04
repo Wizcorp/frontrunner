@@ -106,6 +106,7 @@ function listChildren() {
 client.once('connected', function () {
   console.log('Connected to ZooKeeper.');
   listChildren();
+  reloadConfig();
 });
 
 client.connect();
