@@ -1,0 +1,25 @@
+{
+  "name": "frontrunner",
+  "version": "0.1.0",
+  "description": "Watch the marathon application nodes in ZooKeeper to trigger HAProxy reconfiguration",
+  "main": "index.js",
+  "dependencies": {
+    "node-zookeeper-client": "~0.2.1"
+  },
+  "devDependencies": {
+    "jshint": "*"
+  },
+  "keywords": [
+    "component",
+    "install"
+  ],
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wizcorp/frontrunner.git"
+  },
+  "author": "Emilien Kenler <ekenler@wizcorp.jp>",
+  "license": "MIT"
+}
