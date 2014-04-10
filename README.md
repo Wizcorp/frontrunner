@@ -14,7 +14,7 @@ used by [Marathon](https://github.com/mesosphere/marathon) and detect changes.
 ## Configuration
 
 The configuration file is a pure JavaScript file.
-It is loaded with the `require()` function, so it has to be written ad a module.
+It is loaded with the `require()` function, so it has to be written as a module.
 
 A default [configuration file](config.js) is provided.
 
