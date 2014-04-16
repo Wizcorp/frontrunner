@@ -2,7 +2,7 @@
 
 var exec = require('child_process').exec;
 var zookeeper = require('node-zookeeper-client');
-var config = require('./config');
+var config = require('config');
 
 var client = zookeeper.createClient(config.zookeeperConnectionString);
 var zkRootPath = '/marathon/state';
