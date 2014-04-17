@@ -95,10 +95,24 @@ function listChildren() {
         return;
       }
 
-      children = children.filter(function (child) {
-        return child.search('app') === 0;
+      // List the running apps
+      var apps = children
+        .filter(function (child) {
+          return child.search('app') === 0;
+        })
+        .map(function (child) {
+          return child.substr(child.indexOf(':') + 1);
+        });
+
+      // List the tasks for the running apps
+      var tasks = children.filter(function (child) {
+        if (child.search('tasks') !== 0) {
+          return false;
+        }
+        var appName = child.substr(child.indexOf(':') + 1);
+        return (apps.indexOf(appName) !== -1);
       });
-      children.forEach(watchData);
+      tasks.forEach(watchData);
     }
   );
 }
