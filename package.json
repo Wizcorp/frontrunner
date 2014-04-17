@@ -4,7 +4,11 @@
   "description": "Watch the marathon application nodes in ZooKeeper to trigger HAProxy reconfiguration",
   "main": "index.js",
   "dependencies": {
-    "node-zookeeper-client": "~0.2.1"
+    "node-zookeeper-client": "~0.2.1",
+    "config": "^0.4.35"
+  },
+  "optionalDependencies": {
+    "yaml": "^0.2.3"
   },
   "devDependencies": {
     "jshint": "*"
