@@ -8,7 +8,7 @@
     "config": "^0.4.35"
   },
   "optionalDependencies": {
-    "yaml": "^0.2.3"
+    "js-yaml": "^3.0.2"
   },
   "devDependencies": {
     "jshint": "*"
