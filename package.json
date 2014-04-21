@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "node-zookeeper-client": "~0.2.1",
-    "config": "^0.4.35"
+    "config": "^0.4.35",
+    "request": "^2.34.0",
+    "underscore": "^1.6.0",
+    "async": "^0.7.0"
   },
   "optionalDependencies": {
     "js-yaml": "^3.0.2"
