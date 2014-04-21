@@ -98,7 +98,7 @@ function listChildren() {
       // List the running apps
       var apps = children
         .filter(function (child) {
-          return child.search('app') === 0;
+          return child.indexOf('app') === 0;
         })
         .map(function (child) {
           return child.substr(child.indexOf(':') + 1);
@@ -106,7 +106,7 @@ function listChildren() {
 
       // List the tasks for the running apps
       var tasks = children.filter(function (child) {
-        if (child.search('tasks') !== 0) {
+        if (child.indexOf('tasks') !== 0) {
           return false;
         }
         var appName = child.substr(child.indexOf(':') + 1);
