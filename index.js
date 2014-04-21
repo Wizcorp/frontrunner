@@ -21,20 +21,12 @@ function reloadConfig() {
     '>',
     config.haproxyConfigFile,
     '&&',
-    config.haproxyExecutable,
-    '-f',
-    config.haproxyConfigFile,
-    '-p',
-    config.haproxyPidFile,
-    '-sf',
-    '$(cat',
-    config.haproxyPidFile,
-    ')'
+    config.haproxyReloadCommand
   ].join(' ');
 
   exec(cmd, function (error) {
     if (error !== null) {
-      console.error('exec error: ' + error);
+      console.error('exec error: ' + cmd + '\n' + error);
     }
   });
 }

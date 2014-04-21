@@ -33,8 +33,7 @@ each represents a ZooKeeper server.
 * `marathonUrl`: Marathon API url passed to the HAProxy config generator.
 * `haproxyConfigGeneratorPath`: Path to the HAProxy config generator.
 * `haproxyConfigFile`: Path to the HAProxy config file.
-* `haproxyExecutable`: Path to the HAProxy executable.
-* `haproxyPidFile`: Path to the HAProxy pid file.
+* `haproxyReloadCommand`: Command to run to reload HAProxy.
 
 To override some values, you have to create a new file with your environment name.
 
