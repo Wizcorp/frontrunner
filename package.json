@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "description": "Watch the marathon application nodes in ZooKeeper to trigger HAProxy reconfiguration",
   "main": "index.js",
+  "engines": {
+    "node": ">=0.10"
+  },
   "dependencies": {
     "node-zookeeper-client": "~0.2.1",
-    "config": "^0.4.35"
+    "config": "^0.4.35",
+    "request": "^2.34.0",
+    "underscore": "^1.6.0",
+    "async": "^0.7.0"
   },
   "optionalDependencies": {
     "js-yaml": "^3.0.2"

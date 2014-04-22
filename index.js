@@ -2,8 +2,16 @@
 
 var exec = require('child_process').exec;
 var zookeeper = require('node-zookeeper-client');
+var async = require('async');
+
 var config = require('config');
 var proxyConfig = config.proxy[config.activeProxy];
+
+var Generator = require('./lib/generator');
+var Marathon = require('./lib/marathon');
+
+var generator = new Generator(proxyConfig.templatePath, proxyConfig.configFile);
+var marathon = new Marathon(config.marathon.url);
 
 var client = zookeeper.createClient(config.zookeeper.connectionString);
 var zkRootPath = '/marathon/state';
@@ -11,23 +19,19 @@ var zkRootPath = '/marathon/state';
 var watchers = {};
 
 function reloadConfig() {
-  /*
-   * Create a command which will launch the configGeneratorPath,
-   * write the output in the specified configFile,
-   * and reload the proxy.
-   */
-  var cmd = [
-    proxyConfig.configGeneratorPath,
-    config.marathon.url,
-    '>',
-    proxyConfig.configFile,
-    '&&',
-    proxyConfig.reloadCommand
-  ].join(' ');
-
-  exec(cmd, function (error) {
-    if (error !== null) {
-      console.error('exec error: ' + cmd + '\n' + error);
+  async.waterfall([
+    function (cb) {
+      marathon.getTasks(cb);
+    },
+    function (tasks, cb) {
+      generator.render({ tasks: tasks }, cb);
+    },
+    function (cb) {
+      exec(proxyConfig.reloadCommand, cb);
+    }
+  ], function (err) {
+    if (err) {
+      console.error(err);
     }
   });
 }

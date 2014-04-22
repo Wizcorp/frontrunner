@@ -7,7 +7,7 @@
   },
   "proxy": {
     "haproxy": {
-      "configGeneratorPath": "/opt/marathon/bin/haproxy_cfg",
+      "templatePath": "haproxy.cfg",
       "configFile": "/etc/haproxy/haproxy.cfg",
       "reloadCommand": "haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)"
     }

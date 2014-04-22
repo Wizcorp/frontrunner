@@ -7,6 +7,10 @@ It uses [node-zookeeper-client](https://github.com/alexguan/node-zookeeper-clien
 to connect to the [ZooKeeper](http://zookeeper.apache.org/) cluster
 used by [Marathon](https://github.com/mesosphere/marathon) and detect changes.
 
+## Requirements
+
+    * node.js 0.10+
+
 ## Installation
 
     git clone https://github.com/Wizcorp/frontrunner.git
@@ -34,7 +38,7 @@ each represents a ZooKeeper server.
 * `activeProxy`: The name of the proxy to use.
 * `proxy`: Configuration objects for the supported proxies.
     Each object is as follows:
-    * `configGeneratorPath`: Path to the proxy config generator.
+    * `templatePath`: Path to the proxy config generator.
     * `configFile`: Path to the proxy config file.
     * `reloadCommand`: Command to run to reload the proxy.
 
@@ -48,7 +52,7 @@ To override some values, you have to create a new file with your environment nam
       url: "http://192.168.1.1:8080"
     proxy:
       haproxy:
-        configGeneratorPath: "/opt/frontrunner/haproxy_cfg"
+        templatePath: "haproxy_custom.cfg"
         reloadCommand: "service haproxy reload"
 
 
