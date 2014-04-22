@@ -7,6 +7,10 @@ It uses [node-zookeeper-client](https://github.com/alexguan/node-zookeeper-clien
 to connect to the [ZooKeeper](http://zookeeper.apache.org/) cluster
 used by [Marathon](https://github.com/mesosphere/marathon) and detect changes.
 
+## Requirements
+
+    * node.js 0.10+
+
 ## Installation
 
     git clone https://github.com/Wizcorp/frontrunner.git
