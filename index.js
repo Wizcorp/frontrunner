@@ -3,38 +3,31 @@
 var exec = require('child_process').exec;
 var zookeeper = require('node-zookeeper-client');
 var config = require('config');
+var proxyConfig = config.proxy[config.activeProxy];
 
-var client = zookeeper.createClient(config.zookeeperConnectionString);
+var client = zookeeper.createClient(config.zookeeper.connectionString);
 var zkRootPath = '/marathon/state';
 
 var watchers = {};
 
 function reloadConfig() {
   /*
-   * Create a command which will launch the haproxyConfigGeneratorPath,
-   * write the output in the specified haproxyConfigFile,
-   * and reload HAProxy.
+   * Create a command which will launch the configGeneratorPath,
+   * write the output in the specified configFile,
+   * and reload the proxy.
    */
   var cmd = [
-    config.haproxyConfigGeneratorPath,
-    config.marathonUrl,
+    proxyConfig.configGeneratorPath,
+    config.marathon.url,
     '>',
-    config.haproxyConfigFile,
+    proxyConfig.configFile,
     '&&',
-    config.haproxyExecutable,
-    '-f',
-    config.haproxyConfigFile,
-    '-p',
-    config.haproxyPidFile,
-    '-sf',
-    '$(cat',
-    config.haproxyPidFile,
-    ')'
+    proxyConfig.reloadCommand
   ].join(' ');
 
   exec(cmd, function (error) {
     if (error !== null) {
-      console.error('exec error: ' + error);
+      console.error('exec error: ' + cmd + '\n' + error);
     }
   });
 }
@@ -52,7 +45,7 @@ function watchData(child) {
   client.getData(childPath, function (event) {
     console.log('[%s] Got watcher event: %s', childPath, event);
 
-    // Reload HAProxy config
+    // Reload proxy config
     reloadConfig();
 
     // Delete the watcher, as the callback has been executed

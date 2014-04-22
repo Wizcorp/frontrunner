@@ -1,8 +1,16 @@
 {
-  "zookeeperConnectionString": "localhost:2181",
-  "marathonUrl": "http://localhost:8080",
-  "haproxyConfigGeneratorPath": "/opt/marathon/bin/haproxy_cfg",
-  "haproxyConfigFile": "/etc/haproxy/haproxy.cfg",
-  "haproxyExecutable": "haproxy",
-  "haproxyPidFile": "/var/run/haproxy.pid"
+  "zookeeper": {
+    "connectionString": "localhost:2181"
+  },
+  "marathon": {
+    "url": "http://localhost:8080"
+  },
+  "proxy": {
+    "haproxy": {
+      "configGeneratorPath": "/opt/marathon/bin/haproxy_cfg",
+      "configFile": "/etc/haproxy/haproxy.cfg",
+      "reloadCommand": "haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)"
+    }
+  },
+  "activeProxy": "haproxy"
 }
