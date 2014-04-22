@@ -28,19 +28,28 @@ A default [configuration file](config/default.json) is provided.
 It shouldn't be edited.
 
 It contains the following options:
-* `zookeeperConnectionString`: Comma separated host:port pairs,
+* `zookeeper.connectionString`: Comma separated host:port pairs,
 each represents a ZooKeeper server.
-* `marathonUrl`: Marathon API url passed to the HAProxy config generator.
-* `haproxyConfigGeneratorPath`: Path to the HAProxy config generator.
-* `haproxyConfigFile`: Path to the HAProxy config file.
-* `haproxyReloadCommand`: Command to run to reload HAProxy.
+* `marathon.url`: Marathon API url passed to the HAProxy config generator.
+* `activeProxy`: The name of the proxy to use.
+* `proxy`: Configuration objects for the supported proxies.
+    Each object is as follows:
+    * `configGeneratorPath`: Path to the proxy config generator.
+    * `configFile`: Path to the proxy config file.
+    * `reloadCommand`: Command to run to reload the proxy.
 
 To override some values, you have to create a new file with your environment name.
 
     # config/production.yml
 
-    zookeeperConnectionString: "192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181"
-    marathonUrl: "http://192.168.1.1:8080"
+    zookeeper:
+      connectionString: "192.168.1.1:2181,192.168.1.2:2181,192.168.1.3:2181"
+    marathon:
+      url: "http://192.168.1.1:8080"
+    proxy:
+      haproxy:
+        configGeneratorPath: "/opt/frontrunner/haproxy_cfg"
+        reloadCommand: "service haproxy reload"
 
 
 ## Usage
