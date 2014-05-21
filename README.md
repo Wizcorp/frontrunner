@@ -41,6 +41,7 @@ each represents a ZooKeeper server.
     * `templatePath`: Path to the proxy config generator.
     * `configFile`: Path to the proxy config file.
     * `reloadCommand`: Command to run to reload the proxy.
+    * `reloadDelay`: The minimal time interval between two reload.
 
 To override some values, you have to create a new file with your environment name.
 
