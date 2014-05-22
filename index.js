@@ -1,6 +1,5 @@
 'use strict';
 
-var exec = require('child_process').exec;
 var zookeeper = require('node-zookeeper-client');
 var async = require('async');
 
@@ -9,6 +8,7 @@ var proxyConfig = config.proxy[config.activeProxy];
 
 var Generator = require('./lib/generator');
 var Marathon = require('./lib/marathon');
+var proxy = require('./lib/proxy');
 
 var generator = new Generator(proxyConfig.templatePath, proxyConfig.configFile);
 var marathon = new Marathon(config.marathon.url);
@@ -26,9 +26,7 @@ function reloadConfig() {
     function (tasks, cb) {
       generator.render({ tasks: tasks }, cb);
     },
-    function (cb) {
-      exec(proxyConfig.reloadCommand, cb);
-    }
+    proxy.reload
   ], function (err) {
     if (err) {
       console.error(err);
