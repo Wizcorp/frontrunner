@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1
+
+* Wait a specified amount of time between two reload. (#11)
+
 ## v0.1.0
 
 * Watch Marathon application nodes in ZooKeeper.
@@ -8,3 +12,4 @@
 * Use [node-config](https://github.com/lorenwest/node-config) to manage
   Frontrunner configuration.
 * Allow using YAML to write Frontrunner configuration file.
+
