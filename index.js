@@ -112,10 +112,11 @@ function listChildren() {
   );
 }
 
-client.once('connected', function () {
+client.on('connected', function () {
   console.log('Connected to ZooKeeper.');
   listChildren();
   reloadConfig();
 });
 
+console.log('Trying to connect to ZooKeeper...');
 client.connect();
