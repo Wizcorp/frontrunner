@@ -34,7 +34,10 @@ It shouldn't be edited.
 It contains the following options:
 * `zookeeper.connectionString`: Comma separated host:port pairs,
 each represents a ZooKeeper server.
-* `marathon.url`: Marathon API url passed to the HAProxy config generator.
+* `marathon`: Marathon configuration.
+    * `url`: Marathon API url used to get the tasks.
+    * `retryDelay`: Delay between two attemps to get the tasks from the Marathon API,
+      if the first request fails.
 * `activeProxy`: The name of the proxy to use.
 * `proxy`: Configuration objects for the supported proxies.
     Each object is as follows:
