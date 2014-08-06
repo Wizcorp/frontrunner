@@ -18,10 +18,20 @@ var zkRootPath = '/marathon/state';
 
 var watchers = {};
 
+var reloadTimeout = null;
+
 function reloadConfig() {
+  clearTimeout(reloadTimeout);
+  reloadTimeout = null;
+
   async.waterfall([
     function (cb) {
-      marathon.getTasks(cb);
+      marathon.getTasks(function (err, tasks) {
+        if (err && !reloadTimeout) {
+          reloadTimeout = setTimeout(reloadConfig, config.marathon.retryDelay);
+        }
+        cb(err, tasks);
+      });
     },
     function (tasks, cb) {
       generator.render({ tasks: tasks }, cb);
