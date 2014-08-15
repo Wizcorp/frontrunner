@@ -3,7 +3,8 @@
     "connectionString": "localhost:2181"
   },
   "marathon": {
-    "url": "http://localhost:8080"
+    "url": "http://localhost:8080",
+    "retryDelay": 10000
   },
   "proxy": {
     "haproxy": {

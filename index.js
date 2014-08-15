@@ -1,7 +1,6 @@
 'use strict';
 
 var zookeeper = require('node-zookeeper-client');
-var async = require('async');
 
 var config = require('config');
 var proxyConfig = config.proxy[config.activeProxy];
@@ -18,19 +17,30 @@ var zkRootPath = '/marathon/state';
 
 var watchers = {};
 
+var reloadTimeout = null;
+
 function reloadConfig() {
-  async.waterfall([
-    function (cb) {
-      marathon.getTasks(cb);
-    },
-    function (tasks, cb) {
-      generator.render({ tasks: tasks }, cb);
-    },
-    proxy.reload
-  ], function (err) {
-    if (err) {
-      console.error(err);
+  clearTimeout(reloadTimeout);
+  reloadTimeout = null;
+
+  marathon.getTasks(function (err, tasks) {
+    if (err && !reloadTimeout) {
+       reloadTimeout = setTimeout(reloadConfig, config.marathon.retryDelay);
+       console.error(err);
+       return;
     }
+    generator.render({ tasks: tasks }, function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      proxy.reload(function (err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+    });
   });
 }
 
@@ -112,10 +122,11 @@ function listChildren() {
   );
 }
 
-client.once('connected', function () {
+client.on('connected', function () {
   console.log('Connected to ZooKeeper.');
   listChildren();
   reloadConfig();
 });
 
+console.log('Trying to connect to ZooKeeper...');
 client.connect();
