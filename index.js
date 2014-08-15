@@ -1,7 +1,6 @@
 'use strict';
 
 var zookeeper = require('node-zookeeper-client');
-var async = require('async');
 
 var config = require('config');
 var proxyConfig = config.proxy[config.activeProxy];
