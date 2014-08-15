@@ -24,23 +24,24 @@ function reloadConfig() {
   clearTimeout(reloadTimeout);
   reloadTimeout = null;
 
-  async.waterfall([
-    function (cb) {
-      marathon.getTasks(function (err, tasks) {
-        if (err && !reloadTimeout) {
-          reloadTimeout = setTimeout(reloadConfig, config.marathon.retryDelay);
-        }
-        cb(err, tasks);
-      });
-    },
-    function (tasks, cb) {
-      generator.render({ tasks: tasks }, cb);
-    },
-    proxy.reload
-  ], function (err) {
-    if (err) {
-      console.error(err);
+  marathon.getTasks(function (err, tasks) {
+    if (err && !reloadTimeout) {
+       reloadTimeout = setTimeout(reloadConfig, config.marathon.retryDelay);
+       console.error(err);
+       return;
     }
+    generator.render({ tasks: tasks }, function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      proxy.reload(function (err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+    });
   });
 }
 
