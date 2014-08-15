@@ -1,6 +1,6 @@
 {
   "name": "frontrunner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Watch the marathon application nodes in ZooKeeper to trigger HAProxy reconfiguration",
   "main": "index.js",
   "engines": {
